@@ -9,6 +9,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def index(request):
+    with open('/Users/parkjiwon/Desktop/workspace/bobkaotlak/babkaotalk/api/diet.json') as json_file:
+        json_data = json.load(json_file)
+
+    print(json_data)
+
     # scriptpath = os.path.dirname(__file__)
     # # print("test")
     # filename = os.path.join(scriptpath, 'test7.pdf')
@@ -321,7 +326,7 @@ def index(request):
     #     }
 
     # dictTojson = json.dumps(dict)
-    # # print(dictTojson)
+    # print(dictTojson)
 
     # 요일배열 = ['월','화','수','목','금']
     # 끼니배열 = ["아침","점심","저녁"]
@@ -355,24 +360,28 @@ def index(request):
     #                     dict[요일][시간][식당][종류] = tables[0].df[i][j].split('\n')
 
     # dictTojson = json.dumps(dict,ensure_ascii = False)
+    menu = '\n'.join(s for s in json_data["월"]["아침"]["KOREAN1"]['메뉴'])
+    nom = '\n'.join(s for s in json_data["월"]["아침"]["KOREAN1"]['식수'])
+    dessert = '\n'.join(s for s in json_data["월"]["아침"]["KOREAN1"]['후식'])
 
     if request.method == "POST":
         body = json.loads(request.body.decode('utf-8'))
 
         print(body["intent"])
         # print(payloads)
+
         _ret = {
             "version": "2.0",
             "data": {
-                "msg": "HI",
-                "name": "Ryan",
-                "position": "Senior Managing Director"
+                "menu": menu,
+                "nom": nom,
+                "dessert": dessert
             }
         }
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
-    return render(request, 'index.html')
+    return render(request, 'index.html',{'json':menu})
 
     # {
     #     "week" : "월",
