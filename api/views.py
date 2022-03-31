@@ -384,7 +384,7 @@ def index(request):
             resDiet = getDiet(postBody['userRequest']['utterance'])
             _ret['data']['menu']=resDiet['menu']
             _ret['data']['nom']=resDiet['nom']
-            _ret['data']['dessert']=resDiet['menu']
+            _ret['data']['dessert']=resDiet['dessert']
             print(_ret['data']['menu'])
             # print(payloads)
 
