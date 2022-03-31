@@ -9,7 +9,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def index(request):
-    with open('/Users/parkjiwon/Desktop/workspace/bobkaotlak/babkaotalk/api/diet.json') as json_file:
+    scriptpath = os.path.dirname(__file__)
+    filename = os.path.join(scriptpath, 'diet.json')
+
+    with open(filename) as json_file:
         json_data = json.load(json_file)
 
     print(json_data)
