@@ -15,7 +15,6 @@ def index(request):
     # print(filename)
     # tables = camelot.read_pdf(filename)
 
-
     # dict = {
     #         "월": {
     #             "아침": {
@@ -324,8 +323,6 @@ def index(request):
     # dictTojson = json.dumps(dict)
     # # print(dictTojson)
 
-
-
     # 요일배열 = ['월','화','수','목','금']
     # 끼니배열 = ["아침","점심","저녁"]
     # # 요일배열 = ['월']
@@ -357,45 +354,45 @@ def index(request):
     #                 else :
     #                     dict[요일][시간][식당][종류] = tables[0].df[i][j].split('\n')
 
-    
     # dictTojson = json.dumps(dict,ensure_ascii = False)
 
     if request.method == "POST":
-        body =  json.loads(request.body.decode('utf-8'))
+        body = json.loads(request.body.decode('utf-8'))
 
         print(body["intent"])
         # print(payloads)
-        _ret = {"version": "2.0",
-                "template": {"outputs": [{"simpleText": {"text": body["intent"]}}] #"template"의 "outputs" 키 내에 
-                                }
-                }
-        _ret = json.dumps(_ret,ensure_ascii = False)
+        _ret = {
+            "version": "2.0",
+            "data": {
+                "msg": "HI",
+                "name": "Ryan",
+                "position": "Senior Managing Director"
+            }
+        }
+        _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
     return render(request, 'index.html')
-    
-    
-   
 
-        # {
-        #     "week" : "월",
-        #     "아침": [
-        #         {
-        #             "hall": "KOREAN1",
-        #             "메뉴" : [],
-        #             "식수" : [],
-        #             "후식" : [],
-        #         }
-        #     ],
-        #     "점심": [],
-        #     "저녁": [],
-        # },
-        # for 시간 in dict[요일]:
-        #     for i, 식당 in zip(range(1, 3), dict[요일][시간]):
-        #         tmp = 0
-        #         for j, 종류 in zip(range(2, 5), dict[요일][시간][식당]):
-        #             dict[요일][시간][식당][종류] = tables[0].df[i][j].split(
-        #                 '\n')
-        #         print(tables[0].df[i][j].split('\n'))
-        #         # print(tables[0].df[i][j].split('\n'))
-        #         tmp = tmp + 1
+    # {
+    #     "week" : "월",
+    #     "아침": [
+    #         {
+    #             "hall": "KOREAN1",
+    #             "메뉴" : [],
+    #             "식수" : [],
+    #             "후식" : [],
+    #         }
+    #     ],
+    #     "점심": [],
+    #     "저녁": [],
+    # },
+    # for 시간 in dict[요일]:
+    #     for i, 식당 in zip(range(1, 3), dict[요일][시간]):
+    #         tmp = 0
+    #         for j, 종류 in zip(range(2, 5), dict[요일][시간][식당]):
+    #             dict[요일][시간][식당][종류] = tables[0].df[i][j].split(
+    #                 '\n')
+    #         print(tables[0].df[i][j].split('\n'))
+    #         # print(tables[0].df[i][j].split('\n'))
+    #         tmp = tmp + 1
