@@ -15,7 +15,7 @@ def index(request):
     with open(filename) as json_file:
         json_data = json.load(json_file)
 
-    print(json_data)
+    # print(json_data)
 
     # scriptpath = os.path.dirname(__file__)
     # # print("test")
@@ -331,14 +331,14 @@ def index(request):
     # dictTojson = json.dumps(dict)
     # print(dictTojson)
 
-    # 요일배열 = ['월','화','수','목','금']
-    # 끼니배열 = ["아침","점심","저녁"]
-    # # 요일배열 = ['월']
-    # # 끼니배열 = ["아침"]
-    # 아침배열 = ["KOREAN1","KOREAN2"]
-    # 점심배열 = ["SPECIAL","NOODLE","KOREAN"]
-    # 저녁배열 = ["KOREAN1","KOREAN2"]
-    # 식사종류 = ["메뉴", "식수", "후식"]
+    요일배열 = ['월', '화', '수', '목', '금']
+    끼니배열 = ["아침", "점심", "저녁"]
+    # 요일배열 = ['월']
+    # 끼니배열 = ["아침"]
+    아침배열 = ["KOREAN1", "KOREAN2"]
+    점심배열 = ["SPECIAL", "NOODLE", "KOREAN"]
+    저녁배열 = ["KOREAN1", "KOREAN2"]
+    식사종류 = ["메뉴", "식수", "후식"]
     # 아점저배열 = []
 
     # for row,요일 in zip(range(4,17,3), 요일배열):
@@ -363,28 +363,35 @@ def index(request):
     #                     dict[요일][시간][식당][종류] = tables[0].df[i][j].split('\n')
 
     # dictTojson = json.dumps(dict,ensure_ascii = False)
-    menu = '\n'.join(s for s in json_data["월"]["아침"]["KOREAN1"]['메뉴'])
-    nom = '\n'.join(s for s in json_data["월"]["아침"]["KOREAN1"]['식수'])
-    dessert = '\n'.join(s for s in json_data["월"]["아침"]["KOREAN1"]['후식'])
+    def getDiet(언제):
+        menu = '\n'.join(s for s in json_data["월"][언제]["KOREAN1"]['메뉴'])
+        nom = '\n'.join(s for s in json_data["월"][언제]["KOREAN1"]['식수'])
+        dessert = '\n'.join(s for s in json_data["월"][언제]["KOREAN1"]['후식'])
+        return {'menu': menu, 'nom': nom, 'dessert': dessert}
 
     if request.method == "POST":
-        body = json.loads(request.body.decode('utf-8'))
-
-        print(body["intent"])
-        # print(payloads)
-
+        postBody = json.loads(request.body.decode('utf-8'))
         _ret = {
             "version": "2.0",
             "data": {
-                "menu": menu,
-                "nom": nom,
-                "dessert": dessert
+                "menu": '',
+                "nom": '',
+                "dessert": ''
             }
         }
+        print(postBody['userRequest']['utterance'])
+        if postBody['userRequest']['utterance'] == '아침' or '점심' or '저녁':
+            resDiet = getDiet(postBody['userRequest']['utterance'])
+            _ret['data']['menu']=resDiet['menu']
+            _ret['data']['nom']=resDiet['nom']
+            _ret['data']['dessert']=resDiet['menu']
+            print(_ret['data']['menu'])
+            # print(payloads)
+
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
-    return render(request, 'index.html',{'json':menu})
+    return render(request, 'index.html')
 
     # {
     #     "week" : "월",
