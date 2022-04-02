@@ -384,64 +384,6 @@ def index(request):
                         "carousel": {
                             "type": "itemCard",
                             "items": [
-                                {
-                                    "imageTitle": {
-                                        "title": "예약 완료",
-                                        "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
-                                    },
-                                    "itemList": [
-                                    ],
-                                    "itemListAlignment": "left",
-                                    "buttons": [
-                                        {
-                                            "label": "예약 정보",
-                                            "action": "message",
-                                            "messageText": "예약 정보"
-                                        },
-                                        {
-                                            "label": "예약 취소",
-                                            "action": "message",
-                                            "messageText": "예약 취소"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "imageTitle": {
-                                        "title": "결제 대기",
-                                        "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/pizza.jpg"
-                                    },
-                                    "itemList": [
-                                        {
-                                            "title": "매장명",
-                                            "description": "정자역점"
-                                        },
-                                        {
-                                            "title": "예약 일시",
-                                            "description": "2022.12.25, 19:25"
-                                        },
-                                        {
-                                            "title": "예약 인원",
-                                            "description": "3명"
-                                        },
-                                        {
-                                            "title": "예약금",
-                                            "description": "30,000원 (결제 대기)"
-                                        }
-                                    ],
-                                    "itemListAlignment": "left",
-                                    "buttons": [
-                                        {
-                                            "label": "예약 취소",
-                                            "action": "message",
-                                            "messageText": "예약 취소"
-                                        },
-                                        {
-                                            "label": "결제",
-                                            "action": "message",
-                                            "messageText": "결제"
-                                        }
-                                    ]
-                                }
                             ]
                         }
                     }
@@ -465,21 +407,56 @@ def index(request):
                 ]
             }
         }
+
+        tmp = {
+            "imageTitle": {
+                "title": "예약 완료",
+                "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
+            },
+            "itemList": [
+            ],
+            "itemListAlignment": "left",
+        }
         print(postBody['userRequest']['utterance'])
-        if postBody['userRequest']['utterance'] == '아침' or '점심' or '저녁':
+        발화 = postBody['userRequest']['utterance']
+        if 발화 == '아침' or '점심' or '저녁':
             resDiet = getDiet(postBody['userRequest']['utterance'])
-            _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                "title": "메뉴",
-                "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
-            })
-            _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                "title": "후식",
-                "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식'])
-            })
-            _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                "title": "식수",
-                "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['식수'])
-            })
+
+            for 식당 in 아침배열:
+                tmp = {
+                    "imageTitle": {
+                        "title": 식당,
+                        "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
+                    },
+                    "itemList": [
+                        {
+                            "title": "메뉴",
+                            "description": ', '.join(s for s in json_data["월"][발화][식당]['메뉴'])
+                        },
+                        {
+                            "title": "후식",
+                            "description": ', '.join(s for s in json_data["월"][발화][식당]['후식'])
+                        },
+                        {
+                            "title": "식수",
+                            "description": ', '.join(s for s in json_data["월"][발화][식당]['식수'])
+                        }
+                    ],
+                    "itemListAlignment": "left",
+                }
+                _ret['template']['outputs'][1]['carousel']['items'].append(tmp)
+            # _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+            #     "title": "메뉴",
+            #     "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
+            # })
+            # _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+            #     "title": "후식",
+            #     "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식'])
+            # })
+            # _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+            #     "title": "식수",
+            #     "description": ' '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['식수'])
+            # })
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
