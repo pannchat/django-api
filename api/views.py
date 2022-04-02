@@ -470,20 +470,16 @@ def index(request):
             resDiet = getDiet(postBody['userRequest']['utterance'])
             _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
                 "title": "메뉴",
-                "description": ' '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
+                "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
             })
-      
-            for idx, 후식 in enumerate(json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식']):
-                if idx == 0:
-                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                        "title": "후식",
-                        "description": 후식
-                    })
-                else:
-                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                        "title": "",
-                        "description": 후식
-                    })
+            _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                "title": "후식",
+                "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식'])
+            })
+            _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                "title": "식수",
+                "description": ', '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['식수'])
+            })
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
