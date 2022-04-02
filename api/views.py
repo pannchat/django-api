@@ -127,7 +127,7 @@ def bread(request):
                         "itemCard": {
                             "title": "",
                             "thumbnail": {
-                                "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + breadIdx + '.jpg',
+                                "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + breadIdx+1 + '.jpg',
                                 "width": 800,
                                 "height": 800
                             },
