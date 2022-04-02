@@ -390,6 +390,22 @@ def index(request):
                                         "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
                                     },
                                     "itemList": [
+                                        {
+                                            "title": "매장명",
+                                            "description": "판교 A스퀘어점"
+                                        },
+                                        {
+                                            "title": "예약 일시",
+                                            "description": "2022.12.25, 19:30"
+                                        },
+                                        {
+                                            "title": "예약 인원",
+                                            "description": "4명"
+                                        },
+                                        {
+                                            "title": "예약금",
+                                            "description": "40,000원 (결제 완료)"
+                                        }
                                     ],
                                     "itemListAlignment": "left",
                                     "buttons": [
@@ -472,7 +488,7 @@ def index(request):
             for 음식 in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴']:
                 _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
                     "title": "이름",
-                    "description":음식
+                    "description": 음식
                 })
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
