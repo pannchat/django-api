@@ -373,20 +373,51 @@ def index(request):
         postBody = json.loads(request.body.decode('utf-8'))
         _ret = {
             "version": "2.0",
-            "data": {
-                "menu": '',
-                "nom": '',
-                "dessert": ''
+            "template": {
+                "outputs": [
+                    {
+                        "carousel": {
+                            "type": "basicCard",
+                            "items": [
+                                {
+                                    "title": "보물상자",
+                                    "description": '',
+                                    "thumbnail": {
+                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                                    },
+                                   
+                                },
+                                {
+                                    "title": "보물상자2",
+                                    "description": "보물상자2 안에는 뭐가 있을까",
+                                    "thumbnail": {
+                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                                    },
+                                    
+                                },
+                                {
+                                    "title": "보물상자3",
+                                    "description": "보물상자3 안에는 뭐가 있을까",
+                                    "thumbnail": {
+                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                                    },
+                                    
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
         print(postBody['userRequest']['utterance'])
         if postBody['userRequest']['utterance'] == '아침' or '점심' or '저녁':
             resDiet = getDiet(postBody['userRequest']['utterance'])
-            _ret['data']['menu']=resDiet['menu']
-            _ret['data']['nom']=resDiet['nom']
-            _ret['data']['dessert']=resDiet['dessert']
-            print(_ret['data']['menu'])
+            _ret['template']['outputs'][0]['carousel']['items'][0]['description'] = resDiet['menu']
+            # _ret['data']['nom'] = resDiet['nom']
+            # _ret['data']['dessert'] = resDiet['dessert']
+            # print(_ret['data']['menu'])
             # print(payloads)
+            print(_ret['template']['outputs'][0]['carousel']['items'][0]['description'])
 
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
