@@ -108,9 +108,6 @@ def bread(request):
     with open(filename) as json_file:
         json_data = json.load(json_file)
 
-
-
-
     if request.method == "POST":
 
         postBody = json.loads(request.body.decode('utf-8'))
@@ -120,26 +117,48 @@ def bread(request):
             if i['id'] == 발화:
                 bread = i['name']
                 breadIdx = i['id']
-                
 
         _ret = {
             "version": "2.0",
             "template": {
                 "outputs": [
-                        {
-                            "simpleText": {
-                                "text": bread
-                            }
-                        },
                     {
-                            "simpleImage": {
+                        "itemCard": {
+                            "title": "",
+                            "thumbnail": {
                                 "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + breadIdx + '.jpg',
-                                "altText": bread
-                            }
+                                "width": 800,
+                                "height": 800
+                            },
+                            "itemList": [
+                                {
+                                    "title": "빵",
+                                    "description": bread
+                                }
+                            ],
+                        }
                     }
                 ]
             }
         }
+        # _ret = {
+        #     "version": "2.0",
+        #     "template": {
+        #         "outputs": [
+        #                 {
+        #                     "simpleText": {
+        #                         "text": bread
+        #                     }
+        #                 },
+        #             {
+        #                     "simpleImage": {
+        #                         "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + breadIdx + '.jpg',
+        #                         "altText": bread
+        #                     }
+        #                 }
+        #         ]
+        #     }
+        # }
         _ret = json.dumps(_ret, ensure_ascii=False)
         return HttpResponse(_ret)
 
