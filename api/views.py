@@ -376,35 +376,91 @@ def index(request):
             "template": {
                 "outputs": [
                     {
+                        "simpleText": {
+                            "text": "총 2개의 예약 내역이 있습니다. 취소할 예약을 선택해 주세요."
+                        }
+                    },
+                    {
                         "carousel": {
-                            "type": "basicCard",
+                            "type": "itemCard",
                             "items": [
                                 {
-                                    "title": "보물상자",
-                                    "description": '',
-                                    "thumbnail": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                                    "imageTitle": {
+                                        "title": "예약 완료",
+                                        "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
                                     },
-                                   
+                                    "itemList": [
+                                    ],
+                                    "itemListAlignment": "left",
+                                    "buttons": [
+                                        {
+                                            "label": "예약 정보",
+                                            "action": "message",
+                                            "messageText": "예약 정보"
+                                        },
+                                        {
+                                            "label": "예약 취소",
+                                            "action": "message",
+                                            "messageText": "예약 취소"
+                                        }
+                                    ]
                                 },
                                 {
-                                    "title": "보물상자2",
-                                    "description": "보물상자2 안에는 뭐가 있을까",
-                                    "thumbnail": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                                    "imageTitle": {
+                                        "title": "결제 대기",
+                                        "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/pizza.jpg"
                                     },
-                                    
-                                },
-                                {
-                                    "title": "보물상자3",
-                                    "description": "보물상자3 안에는 뭐가 있을까",
-                                    "thumbnail": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-                                    },
-                                    
+                                    "itemList": [
+                                        {
+                                            "title": "매장명",
+                                            "description": "정자역점"
+                                        },
+                                        {
+                                            "title": "예약 일시",
+                                            "description": "2022.12.25, 19:25"
+                                        },
+                                        {
+                                            "title": "예약 인원",
+                                            "description": "3명"
+                                        },
+                                        {
+                                            "title": "예약금",
+                                            "description": "30,000원 (결제 대기)"
+                                        }
+                                    ],
+                                    "itemListAlignment": "left",
+                                    "buttons": [
+                                        {
+                                            "label": "예약 취소",
+                                            "action": "message",
+                                            "messageText": "예약 취소"
+                                        },
+                                        {
+                                            "label": "결제",
+                                            "action": "message",
+                                            "messageText": "결제"
+                                        }
+                                    ]
                                 }
                             ]
                         }
+                    }
+                ],
+                "quickReplies": [
+                    {
+                        "messageText": "인기 메뉴",
+                        "action": "message",
+                        "label": "인기 메뉴"
+                    },
+                    {
+                        "messageText": "최근 주문",
+                        "action": "message",
+                        "label": "최근 주문"
+                    },
+                    {
+                        "messageText": "장바구니",
+                        "action": "message",
+                        "label": "장바구니"
                     }
                 ]
             }
@@ -412,13 +468,12 @@ def index(request):
         print(postBody['userRequest']['utterance'])
         if postBody['userRequest']['utterance'] == '아침' or '점심' or '저녁':
             resDiet = getDiet(postBody['userRequest']['utterance'])
-            _ret['template']['outputs'][0]['carousel']['items'][0]['description'] = resDiet['menu']
-            # _ret['data']['nom'] = resDiet['nom']
-            # _ret['data']['dessert'] = resDiet['dessert']
-            # print(_ret['data']['menu'])
-            # print(payloads)
-            print(_ret['template']['outputs'][0]['carousel']['items'][0]['description'])
 
+            for 음식 in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴']:
+                _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                    "title": "이름",
+                    "description":음식
+                })
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
