@@ -469,11 +469,28 @@ def index(request):
         if postBody['userRequest']['utterance'] == '아침' or '점심' or '저녁':
             resDiet = getDiet(postBody['userRequest']['utterance'])
 
-            for 음식 in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴']:
-                _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                    "title": "이름",
+            for idx, 음식 in enumerate(json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴']):
+                if idx == 0:
+                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                        "title": "메뉴",
+                        "description": 음식
+                    })
+                else:
+                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                    "title": "",
                     "description":음식
-                })
+                    })
+            for idx, 후식 in enumerate(json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식']):
+                if idx == 0:
+                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                        "title": "후식",
+                        "description": 후식
+                    })
+                else:
+                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                        "title": "",
+                        "description": 후식
+                    })
         _ret = json.dumps(_ret, ensure_ascii=False)
         # pprint.pprint(_ret)
         return HttpResponse(_ret)
