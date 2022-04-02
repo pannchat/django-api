@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url 
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-p1atdsnoyg@shl%7r9#$owq%*ow_7dif*q#2lc$3&%31=i5xsc')
-
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY', 'django-insecure-p1atdsnoyg@shl%7r9#$owq%*ow_7dif*q#2lc$3&%31=i5xsc')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 
 ALLOWED_HOSTS = ['*']
@@ -36,7 +36,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders', # CORS 관련 추가
+    'corsheaders',  # CORS 관련 추가
     'rest_framework',
     'api.apps.ApiConfig',
     'django.contrib.admin',
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # CORS 관련 추가
+    'corsheaders.middleware.CorsMiddleware',  # CORS 관련 추가
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 
 ]
 
@@ -75,8 +75,13 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'my_filter': 'api.templatetags.custom_tags',
+            }
         },
+
     },
+
 ]
 
 WSGI_APPLICATION = 'babkaotalk.wsgi.application'
@@ -91,9 +96,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-db_from_env = dj_database_url.config(conn_max_age=500) # DB 설정부분 아래에 입력 
-DATABASES['default'].update(db_from_env) # DB 설정부분 아래에 입력
-
+db_from_env = dj_database_url.config(conn_max_age=500)  # DB 설정부분 아래에 입력
+DATABASES['default'].update(db_from_env)  # DB 설정부분 아래에 입력
 
 
 # Password validation
@@ -114,7 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:4000' ,'http://localhost:4000'] 
+
+# CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:4000' ,'http://localhost:4000']
 # CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -134,13 +139,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = '/static/' 
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'api', 'static')
+]  # static 파일들이 어디에 있는지를 쓰는곳
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

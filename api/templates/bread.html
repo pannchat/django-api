@@ -1,0 +1,12 @@
+{% load static %}
+{% load custom_tags %}  
+
+{% for i in 21|times %}
+<img src="static/bread/{{i}}.jpg"/>
+<!-- <img src="{% static 'bread/{{i}}.jpg' %}" alt="My image"> -->
+{% endfor %}
+
+
+<script>
+    console.log(`{{res}}`)
+</script>

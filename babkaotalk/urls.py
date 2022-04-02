@@ -18,9 +18,14 @@ from django.urls import path
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 import api.views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', api.views.index, name='index'),
+    path('bread', api.views.bread, name='bread'),
     path('admin/', admin.site.urls),
     path('api/doc', get_swagger_view(title='Rest API Document')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
