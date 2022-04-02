@@ -470,7 +470,7 @@ def index(request):
             resDiet = getDiet(postBody['userRequest']['utterance'])
             _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
                 "title": "메뉴",
-                "description": '\n'.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
+                "description": ' '.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
             })
       
             for idx, 후식 in enumerate(json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식']):
