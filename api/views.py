@@ -128,8 +128,8 @@ def bread(request):
                             "title": "",
                             "thumbnail": {
                                 "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + breadIdx + '.jpg',
-                                "width": 400,
-                                "height": 400
+                                "width": 800,
+                                "height": 800
                             },
                             "itemList": [
                                 {
