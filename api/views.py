@@ -363,11 +363,7 @@ def index(request):
     #                     dict[요일][시간][식당][종류] = tables[0].df[i][j].split('\n')
 
     # dictTojson = json.dumps(dict,ensure_ascii = False)
-    def getDiet(언제):
-        menu = '\n'.join(s for s in json_data["월"][언제]["KOREAN1"]['메뉴'])
-        nom = '\n'.join(s for s in json_data["월"][언제]["KOREAN1"]['식수'])
-        dessert = '\n'.join(s for s in json_data["월"][언제]["KOREAN1"]['후식'])
-        return {'menu': menu, 'nom': nom, 'dessert': dessert}
+
 
     if request.method == "POST":
         postBody = json.loads(request.body.decode('utf-8'))
@@ -420,9 +416,14 @@ def index(request):
         print(postBody['userRequest']['utterance'])
         발화 = postBody['userRequest']['utterance']
         if 발화 == '아침' or '점심' or '저녁':
-            resDiet = getDiet(postBody['userRequest']['utterance'])
-
-            for 식당 in 아침배열:
+            if 발화 == '아침':
+                배열 = 아침배열
+            elif 발화 == '점심':
+                배열 = 점심배열
+            else:
+                배열 = 저녁배열
+                
+            for 식당 in 배열:
                 tmp = {
                     "imageTitle": {
                         "title": 식당,
