@@ -34,10 +34,10 @@ bread = {
     "bread" : []
 }
 for idx,b in enumerate(arr):
-    bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/bread/"+str(idx)+".jpg"})
+    bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/bread/"+str(idx+1)+".jpg"})
 
 
-with open('bread.json','w',encoding='utf-8') as make_file:
+with open('api/bread.json','w',encoding='utf-8') as make_file:
     json.dump(bread, make_file, ensure_ascii=False, indent='\t')
 
 # print(tables[0].df[0])

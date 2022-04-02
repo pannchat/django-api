@@ -1,3 +1,4 @@
+import enum
 from django.shortcuts import render
 import camelot
 import os.path
@@ -113,10 +114,10 @@ def bread(request):
         postBody = json.loads(request.body.decode('utf-8'))
         발화 = postBody['userRequest']['utterance']
 
-        for i in json_data['bread']:
-            if i['id'] == 발화:
-                bread = i['name']
-                breadIdx = i['id']
+        for idx,arr in enumerate(json_data['bread']):
+            if arr['id'] == 발화:
+                bread = arr['name']
+                breadIdx = idx
 
         _ret = {
             "version": "2.0",
@@ -127,8 +128,8 @@ def bread(request):
                             "title": "",
                             "thumbnail": {
                                 "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + breadIdx + '.jpg',
-                                "width": 800,
-                                "height": 800
+                                "width": 400,
+                                "height": 400
                             },
                             "itemList": [
                                 {
