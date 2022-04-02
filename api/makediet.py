@@ -10,7 +10,7 @@ import datetime
 
 scriptpath = os.path.dirname(__file__)
 # print("test")
-filename = os.path.join(scriptpath, 'test7.pdf')
+filename = os.path.join(scriptpath, 'test.pdf')
 print(filename)
 tables = camelot.read_pdf(filename)
 
