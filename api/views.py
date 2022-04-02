@@ -468,18 +468,11 @@ def index(request):
         print(postBody['userRequest']['utterance'])
         if postBody['userRequest']['utterance'] == '아침' or '점심' or '저녁':
             resDiet = getDiet(postBody['userRequest']['utterance'])
-
-            for idx, 음식 in enumerate(json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴']):
-                if idx == 0:
-                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                        "title": "메뉴",
-                        "description": 음식
-                    })
-                else:
-                    _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
-                    "title": "",
-                    "description":음식
-                    })
+            _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
+                "title": "메뉴",
+                "description": '\n'.join(s for s in json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['메뉴'])
+            })
+      
             for idx, 후식 in enumerate(json_data["월"][postBody['userRequest']['utterance']]["KOREAN1"]['후식']):
                 if idx == 0:
                     _ret['template']['outputs'][1]['carousel']['items'][0]['itemList'].append({
