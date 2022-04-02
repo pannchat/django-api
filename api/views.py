@@ -5,6 +5,7 @@ import json
 # from django.utils import simplejson
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+import datetime
 
 
 @csrf_exempt
@@ -331,7 +332,8 @@ def index(request):
     # dictTojson = json.dumps(dict)
     # print(dictTojson)
 
-    요일배열 = ['월', '화', '수', '목', '금']
+    요일배열 = ['월', '화', '수', '목', '금','토','일']
+    요일 = 요일배열[datetime.datetime.today().weekday()]
     끼니배열 = ["아침", "점심", "저녁"]
     # 요일배열 = ['월']
     # 끼니배열 = ["아침"]
@@ -373,7 +375,7 @@ def index(request):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": "총 2개의 예약 내역이 있습니다. 취소할 예약을 선택해 주세요."
+                            "text": "식사 맛있게 하세요~!"
                         }
                     },
                     {
@@ -386,34 +388,25 @@ def index(request):
                 ],
                 "quickReplies": [
                     {
-                        "messageText": "인기 메뉴",
+                        "messageText": "아침",
                         "action": "message",
-                        "label": "인기 메뉴"
+                        "label": "아침"
                     },
                     {
-                        "messageText": "최근 주문",
+                        "messageText": "점심",
                         "action": "message",
-                        "label": "최근 주문"
+                        "label": "점심"
                     },
                     {
-                        "messageText": "장바구니",
+                        "messageText": "저녁",
                         "action": "message",
-                        "label": "장바구니"
+                        "label": "저녁"
                     }
                 ]
             }
         }
 
-        tmp = {
-            "imageTitle": {
-                "title": "예약 완료",
-                "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
-            },
-            "itemList": [
-            ],
-            "itemListAlignment": "left",
-        }
-        print(postBody['userRequest']['utterance'])
+
         발화 = postBody['userRequest']['utterance']
         if 발화 == '아침' or '점심' or '저녁':
             if 발화 == '아침':
@@ -422,7 +415,7 @@ def index(request):
                 배열 = 점심배열
             else:
                 배열 = 저녁배열
-                
+
             for 식당 in 배열:
                 tmp = {
                     "imageTitle": {
@@ -432,15 +425,15 @@ def index(request):
                     "itemList": [
                         {
                             "title": "메뉴",
-                            "description": ', '.join(s for s in json_data["월"][발화][식당]['메뉴'])
+                            "description": ', '.join(s for s in json_data[요일][발화][식당]['메뉴'])
                         },
                         {
                             "title": "후식",
-                            "description": ', '.join(s for s in json_data["월"][발화][식당]['후식'])
+                            "description": ', '.join(s for s in json_data[요일][발화][식당]['후식'])
                         },
                         {
                             "title": "식수",
-                            "description": ', '.join(s for s in json_data["월"][발화][식당]['식수'])
+                            "description": ', '.join(s for s in json_data[요일][발화][식당]['식수'])
                         }
                     ],
                     "itemListAlignment": "left",
