@@ -77,7 +77,7 @@ def index(request):
             for 식당 in 배열:
                 tmp = {
                     "imageTitle": {
-                        "title": postBody['detailParams']['mealTime']['value'],
+                        "title": postBody['action']['detailParams']['mealTime']['value'],
                         "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
                     },
                     "itemList": [
