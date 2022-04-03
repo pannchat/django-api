@@ -10,7 +10,7 @@ import datetime
 
 scriptpath = os.path.dirname(__file__)
 # print("test")
-filename = os.path.join(scriptpath, 'test.pdf')
+filename = os.path.join(scriptpath, 'test4.pdf')
 print(filename)
 tables = camelot.read_pdf(filename)
 
@@ -354,5 +354,5 @@ for row,요일 in zip(range(4,17,3), 요일배열):
 
 dictTojson = json.dumps(dict,ensure_ascii = False)
 
-with open('diet2.json','w',encoding='utf-8') as make_file:
+with open('api/diet.json','w',encoding='utf-8') as make_file:
     json.dump(dict, make_file, ensure_ascii=False, indent='\t')
