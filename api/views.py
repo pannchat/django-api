@@ -63,7 +63,7 @@ def index(request):
                 ]
             }
         }
-
+        
         발화 = postBody['userRequest']['utterance']
         if 발화 == '아침' or '점심' or '저녁':
             if 발화 == '아침':
@@ -77,7 +77,7 @@ def index(request):
             for 식당 in 배열:
                 tmp = {
                     "imageTitle": {
-                        "title": 식당,
+                        "title": postBody['detailParams']['mealTime']['value'],
                         "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
                     },
                     "itemList": [
