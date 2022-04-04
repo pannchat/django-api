@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 
+요일배열 = ['월', '화', '수', '목', '금', '토', '일']
+요일 = 요일배열[datetime.datetime.today().weekday()]
 
 @csrf_exempt
 def index(request):
@@ -17,8 +19,6 @@ def index(request):
     with open(filename) as json_file:
         json_data = json.load(json_file)
 
-    요일배열 = ['월', '화', '수', '목', '금', '토', '일']
-    요일 = 요일배열[datetime.datetime.today().weekday()]
     print(datetime.datetime.today().weekday())
     끼니배열 = ["아침", "점심", "저녁"]
     아침배열 = ["KOREAN1", "KOREAN2"]
@@ -112,7 +112,7 @@ def index(request):
 def bread(request):
     scriptpath = os.path.dirname(__file__)
     filename = os.path.join(scriptpath, 'bread.json')
-    요일 = 요일배열[datetime.datetime.today().weekday()]
+
     with open(filename) as json_file:
         json_data = json.load(json_file)
 
