@@ -112,10 +112,10 @@ def bread(request):
     if request.method == "POST":
 
         postBody = json.loads(request.body.decode('utf-8'))
-        발화 = postBody['action']['detailParams']['bakery']['value']
+        # 발화 = postBody['action']['detailParams']['bakery']['value']
 
         for idx,arr in enumerate(json_data['bread']):
-            if arr['id'] == 발화:
+            if arr['id'] == datetime.datetime.now().strftime("%-d"):
                 bread = arr['name']
                 breadIdx = idx
 

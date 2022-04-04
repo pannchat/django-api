@@ -61,7 +61,7 @@ cnt = 1
 for i in range(5):
     for j in range(5):
         test_cut = testRead[556+363*i:824+363*i, 62+ 292*j:345 + 292*j]
-        cv2.imwrite('api/static/bread/'+ str(cnt-4) + '.jpg',test_cut)
+        cv2.imwrite('api/static/bread/'+ str(cnt-4) + '.jpg',test_cut,params=[cv2.IMWRITE_JPEG_QUALITY,100])
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
         cnt = cnt + 1
