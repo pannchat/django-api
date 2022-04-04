@@ -19,6 +19,7 @@ def index(request):
 
     요일배열 = ['월', '화', '수', '목', '금', '토', '일']
     요일 = 요일배열[datetime.datetime.today().weekday()]
+    print(datetime.datetime.today().weekday())
     끼니배열 = ["아침", "점심", "저녁"]
     아침배열 = ["KOREAN1", "KOREAN2"]
     점심배열 = ["SPECIAL", "NOODLE", "KOREAN"]
@@ -27,13 +28,15 @@ def index(request):
 
     if request.method == "POST":
         postBody = json.loads(request.body.decode('utf-8'))
+        발화 = postBody['action']['detailParams']['mealTime']['value']
+
         _ret = {
             "version": "2.0",
             "template": {
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": "식사 맛있게 하세요~!"
+                            "text": 요일 + "요일" +발화+  "메뉴 입니다.\n식사 맛있게 하세요~!"
                         }
                     },
                     {
@@ -68,7 +71,7 @@ def index(request):
                 ]
             }
         }
-        발화 = postBody['action']['detailParams']['mealTime']['value']
+        
         if 발화 == '아침' or '점심' or '저녁':
             if 발화 == '아침':
                 배열 = 아침배열
@@ -103,7 +106,7 @@ def index(request):
         _ret = json.dumps(_ret, ensure_ascii=False)
 
         return HttpResponse(_ret)
-    return render(request, 'index.html')
+    return render(request, 'index.html', {"week" : 요일})
 
 
 def bread(request):
