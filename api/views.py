@@ -81,7 +81,7 @@ def index(request):
                 tmp = {
                     "imageTitle": {
                         "title": 식당,
-                        "imageUrl": "https://t1.kakaocdn.net/openbuilder/docs_image/wine.jpg"
+                        "imageUrl": "https://babkaotalk.herokuapp.com/static/images/DangDang.png"
                     },
                     "itemList": [
                         {
