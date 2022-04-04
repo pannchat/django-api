@@ -77,7 +77,6 @@ def index(request):
             else:
                 배열 = 저녁배열
 
-            요일 = '월'
             for 식당 in 배열:
                 tmp = {
                     "imageTitle": {
