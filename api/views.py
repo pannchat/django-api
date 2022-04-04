@@ -36,7 +36,7 @@ def index(request):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": 요일 + "요일" +발화+  "메뉴 입니다.\n식사 맛있게 하세요~!"
+                            "text": 요일 + "요일 " + 발화 +  " 메뉴 입니다.\n식사 맛있게 하세요~!"
                         }
                     },
                     {
@@ -112,7 +112,7 @@ def index(request):
 def bread(request):
     scriptpath = os.path.dirname(__file__)
     filename = os.path.join(scriptpath, 'bread.json')
-
+    요일 = 요일배열[datetime.datetime.today().weekday()]
     with open(filename) as json_file:
         json_data = json.load(json_file)
 
@@ -140,7 +140,7 @@ def bread(request):
                             },
                             "itemList": [
                                 {
-                                    "title": "빵",
+                                    "title": 요일 + "요일 빵",
                                     "description": bread
                                 }
                             ],
