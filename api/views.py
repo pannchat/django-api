@@ -8,18 +8,41 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 
-_errRet = {
-"version": "2.0",
-"template": {
-    "outputs": [
-        {
-            "simpleText": {
-                "text": "아직 식단 정보가 업데이트 되지 않았습니다.\n식단이 올라오는대로 업데이트할게요."
+요일배열 = ['월', '화', '수', '목', '금', '토', '일']
+errRet = {
+    "version": "2.0",
+    "template": {
+        "outputs": [
+            {
+                "simpleText": {
+                    "text": ''}
             }
-        }
-    ]
+        ],
+        "quickReplies": [
+            {
+                "messageText": "아침",
+                "action": "message",
+                "label": "아침"
+            },
+            {
+                "messageText": "점심",
+                "action": "message",
+                "label": "점심"
+            },
+            {
+                "messageText": "저녁",
+                "action": "message",
+                "label": "저녁"
+            },
+            {
+                "messageText": "빵",
+                "action": "message",
+                "label": "빵"
+            }
+        ]
+    }
 }
-}
+
 
 @csrf_exempt
 def index(request):
@@ -29,7 +52,6 @@ def index(request):
     with open(filename) as json_file:
         json_data = json.load(json_file)
     현재 = datetime.datetime.now()
-    요일배열 = ['월', '화', '수', '목', '금', '토', '일']
     요일 = 요일배열[datetime.datetime.today().weekday()]
     끼니배열 = ["아침", "점심", "저녁"]
     아침배열 = ["KOREAN1", "KOREAN2"]
@@ -39,9 +61,12 @@ def index(request):
 
     if request.method == "POST":
         # 업데이트 검사
-        
+
         if json_data['updated'] < 현재.strftime("%U"):
-          return HttpResponse(_errRet)
+            _errRet = errRet
+            _errRet['template']['outputs'][0]['simpleText']['text'] = "아직 식단 정보가 업데이트 되지 않았습니다.\n식단이 올라오는대로 업데이트할게요."
+            _errRet = json.dumps(_errRet, ensure_ascii=False)
+            return HttpResponse(_errRet)
 
         postBody = json.loads(request.body.decode('utf-8'))
         _ret = {
@@ -134,12 +159,20 @@ def bread(request):
 
         postBody = json.loads(request.body.decode('utf-8'))
         # 발화 = postBody['action']['detailParams']['bakery']['value']
-
+        요일 = 요일배열[datetime.datetime.today().weekday()]
+        breadIdx = -1
         for idx, arr in enumerate(json_data['bread']):
             if arr['id'] == datetime.datetime.now().strftime("%-d"):
                 bread = arr['name']
                 breadIdx = idx
-
+        if breadIdx == -1:
+            _errRet = errRet
+            if 요일 == '토' or 요일 == '일':
+                _errRet['template']['outputs'][0]['simpleText']['text'] = "오늘은 빵이 제공되지 않아요. "
+            else:
+                _errRet['template']['outputs'][0]['simpleText']['text'] = "빵 정보가 정상적으로 표시되지 않고 있습니다. 불편을 드려 죄송합니다."
+            _errRet = json.dumps(_errRet, ensure_ascii=False)
+            return HttpResponse(_errRet)
         _ret = {
             "version": "2.0",
             "template": {
