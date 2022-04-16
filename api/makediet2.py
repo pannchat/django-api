@@ -16,9 +16,10 @@ tables = camelot.read_pdf(filename,flavor='stream',
                           table_regions=['0,0,400,400'])
 # print(tables[0].df[1])
 print(tables[0].df)
-
+now = datetime.datetime.now()
 
 dict = {
+    "updated": now.strftime("%x"),
     "월": {
         "아침": {
             "KOREAN": {

@@ -13,8 +13,10 @@ scriptpath = os.path.dirname(__file__)
 filename = os.path.join(scriptpath, 'test4.pdf')
 print(filename)
 tables = camelot.read_pdf(filename)
+now = datetime.datetime.now()
 
 dict = {
+        "updated": now.strftime("%W"),
         "월": {
             "아침": {
                 "KOREAN1": {

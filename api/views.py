@@ -8,8 +8,18 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 
-요일배열 = ['월', '화', '수', '목', '금', '토', '일']
-요일 = 요일배열[datetime.datetime.today().weekday()]
+_errRet = {
+"version": "2.0",
+"template": {
+    "outputs": [
+        {
+            "simpleText": {
+                "text": "아직 식단 정보가 업데이트 되지 않았습니다.\n식단이 올라오는대로 업데이트할게요."
+            }
+        }
+    ]
+}
+}
 
 @csrf_exempt
 def index(request):
@@ -18,8 +28,9 @@ def index(request):
 
     with open(filename) as json_file:
         json_data = json.load(json_file)
-
-    print(datetime.datetime.today().weekday())
+    현재 = datetime.datetime.now()
+    요일배열 = ['월', '화', '수', '목', '금', '토', '일']
+    요일 = 요일배열[datetime.datetime.today().weekday()]
     끼니배열 = ["아침", "점심", "저녁"]
     아침배열 = ["KOREAN1", "KOREAN2"]
     점심배열 = ["SPECIAL", "NOODLE", "KOREAN"]
@@ -27,16 +38,19 @@ def index(request):
     식사종류 = ["메뉴", "식수", "후식"]
 
     if request.method == "POST":
-        postBody = json.loads(request.body.decode('utf-8'))
-        발화 = postBody['action']['detailParams']['mealTime']['value']
+        # 업데이트 검사
+        
+        if json_data['updated'] < 현재.strftime("%U"):
+          return HttpResponse(_errRet)
 
+        postBody = json.loads(request.body.decode('utf-8'))
         _ret = {
             "version": "2.0",
             "template": {
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": 요일 + "요일 " + 발화 +  " 메뉴 입니다.\n식사 맛있게 하세요~!"
+                            "text": "식사 맛있게 하세요~!"
                         }
                     },
                     {
@@ -71,7 +85,7 @@ def index(request):
                 ]
             }
         }
-        
+        발화 = postBody['action']['detailParams']['mealTime']['value']
         if 발화 == '아침' or '점심' or '저녁':
             if 발화 == '아침':
                 배열 = 아침배열
@@ -106,7 +120,7 @@ def index(request):
         _ret = json.dumps(_ret, ensure_ascii=False)
 
         return HttpResponse(_ret)
-    return render(request, 'index.html', {"week" : 요일})
+    return render(request, 'index.html')
 
 
 def bread(request):
@@ -140,11 +154,33 @@ def bread(request):
                             },
                             "itemList": [
                                 {
-                                    "title": 요일 + "요일 빵",
+                                    "title": "빵",
                                     "description": bread
                                 }
                             ],
                         }
+                    }
+                ],
+                "quickReplies": [
+                    {
+                        "messageText": "아침",
+                        "action": "message",
+                        "label": "아침"
+                    },
+                    {
+                        "messageText": "점심",
+                        "action": "message",
+                        "label": "점심"
+                    },
+                    {
+                        "messageText": "저녁",
+                        "action": "message",
+                        "label": "저녁"
+                    },
+                    {
+                        "messageText": "빵",
+                        "action": "message",
+                        "label": "빵"
                     }
                 ]
             }
