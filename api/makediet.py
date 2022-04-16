@@ -10,7 +10,7 @@ import datetime
 
 scriptpath = os.path.dirname(__file__)
 # print("test")
-filename = os.path.join(scriptpath, 'test4.pdf')
+filename = os.path.join(scriptpath, 'diet.pdf')
 print(filename)
 tables = camelot.read_pdf(filename)
 now = datetime.datetime.now()
