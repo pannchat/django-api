@@ -11,8 +11,10 @@ import datetime
 scriptpath = os.path.dirname(__file__)
 # print("test")
 filename = os.path.join(scriptpath, 'diet.pdf')
+
 print(filename)
-tables = camelot.read_pdf(filename)
+tables = camelot.read_pdf(filename, table_areas=["0,0,1500,1500"])
+print(tables)
 now = datetime.datetime.now()
 
 dict = {
@@ -322,7 +324,7 @@ dict = {
     }
 
 dictTojson = json.dumps(dict)
-print(dictTojson)
+# print(dictTojson)
 
 요일배열 = ['월', '화', '수', '목', '금','토','일']
 요일 = 요일배열[datetime.datetime.today().weekday()]
