@@ -145,7 +145,7 @@ def index(request):
         _ret = json.dumps(_ret, ensure_ascii=False)
 
         return HttpResponse(_ret)
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'now': datetime.datetime.now(),"updated":json_data['updated'], "nows": 현재.strftime("%W")})
 
 
 def bread(request):
