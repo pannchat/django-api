@@ -13,7 +13,7 @@ scriptpath = os.path.dirname(__file__)
 filename = os.path.join(scriptpath, 'diet.pdf')
 
 print(filename)
-tables = camelot.read_pdf(filename, table_areas=["0,0,1500,1500"])
+tables = camelot.read_pdf(filename)
 print(tables)
 now = datetime.datetime.now()
 
@@ -335,7 +335,7 @@ dictTojson = json.dumps(dict)
 식사종류 = ["메뉴", "식수", "후식"]
 아점저배열 = []
 
-for row,요일 in zip(range(4,17,3), 요일배열):
+for row,요일 in zip(range(4,12,3), 요일배열):
     for 시간 in 끼니배열:
         if 시간 == "아침":
             s=1
