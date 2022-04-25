@@ -62,7 +62,7 @@ def index(request):
     if request.method == "POST":
         # 업데이트 검사
 
-        if json_data['updated'] < 현재.strftime("%W"):
+        if json_data['updated'] < int(현재.strftime("%W")):
             _errRet = errRet
             _errRet['template']['outputs'][0]['simpleText']['text'] = "아직 식단 정보가 업데이트 되지 않았습니다.\n식단이 올라오는대로 업데이트할게요."
             _errRet = json.dumps(_errRet, ensure_ascii=False)
