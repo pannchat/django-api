@@ -11,7 +11,7 @@ import numpy as np
 
 scriptpath = os.path.dirname(__file__)
 
-filename = os.path.join(scriptpath, 'test2.pdf')
+filename = os.path.join(scriptpath, 'diet.pdf')
 
 
 
@@ -52,7 +52,7 @@ print(weekend[0].df)
 now = datetime.datetime.now()
 
 dict = {
-        "updated": now.strftime("%W"),
+        "updated": int(now.strftime("%W")),
         "월": {
             "아침": {
                 "KOREAN1": {
