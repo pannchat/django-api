@@ -5,14 +5,16 @@ import json
 # from django.utils import simplejson
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from PyPDF2 import PdfFileWriter, PdfFileReader
 import datetime
 
 
 scriptpath = os.path.dirname(__file__)
 # print("test")
-filename = os.path.join(scriptpath, 'diet.pdf')
+filename = os.path.join(scriptpath, 'diet0.pdf')
+file = PdfFileReader(filename)
+print(file.isEncrypted)
 
-print(filename)
 tables = camelot.read_pdf(filename)
 print(tables)
 now = datetime.datetime.now()
