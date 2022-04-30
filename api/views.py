@@ -82,7 +82,7 @@ def index(request):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": "식사 맛있게 하세요~!"
+                            "text": 요일+"요일" + 발화 + " 메뉴입니다. 식사 맛있게 하세요~!"
                         }
                     },
                     {
@@ -151,6 +151,8 @@ def index(request):
                 }
                 if len(json_data[요일][발화][식당]['메뉴'])>0 and len(json_data[요일][발화][식당]['후식'])>0 and len(json_data[요일][발화][식당]['식수']) > 0:
                     _ret['template']['outputs'][1]['carousel']['items'].append(tmp)
+                elif len(json_data[요일][발화][식당]['메뉴'])>0 and len(json_data[요일][발화][식당]['후식'])>0 and len(json_data[요일][발화][식당]['식수']) > 0 :
+                    _ret['template']['outputs'][0]['simpleText']['text'] = "응답 내용이 없습니다. 문제가 발생했거나 식사가 제공되지 않나봐요."
         _ret = json.dumps(_ret, ensure_ascii=False)
 
         return HttpResponse(_ret)
