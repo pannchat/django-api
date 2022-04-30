@@ -407,7 +407,15 @@ for i in range(3):
     j=0
     for 요일 in 요일배열[-2:]:
         for 종류 in 식사종류[:2]:
-            dict[요일][시간][식당][종류] = weekend[0].df[i][j].split('\n')
+            try:
+                tmp = weekend[0].df[i][j].split('\n')
+                if tmp[0] == 'nan':
+                    del tmp[0]
+                elif tmp[0] =='':
+                    del tmp[0]
+                dict[요일][시간][식당][종류] = tmp
+            except:
+                dict[요일][시간][식당][종류] = []
             j += 1
 
 dictTojson = json.dumps(dict, ensure_ascii=False)
