@@ -61,6 +61,13 @@ def index(request):
 
     if request.method == "POST":
         # 업데이트 검사
+        postBody = json.loads(request.body.decode('utf-8'))
+        발화 = postBody['action']['detailParams']['mealTime']['value']
+        try: 
+            요일 = postBody['action']['detailParams']['dateTime']['value']
+        except:
+            요일 = 요일배열[datetime.datetime.today().weekday()]
+
 
         if json_data['updated'] < int(현재.strftime("%W")):
             _errRet = errRet
@@ -68,7 +75,7 @@ def index(request):
             _errRet = json.dumps(_errRet, ensure_ascii=False)
             return HttpResponse(_errRet)
 
-        postBody = json.loads(request.body.decode('utf-8'))
+        
         _ret = {
             "version": "2.0",
             "template": {
@@ -110,7 +117,8 @@ def index(request):
                 ]
             }
         }
-        발화 = postBody['action']['detailParams']['mealTime']['value']
+
+
         if 발화 == '아침' or '점심' or '저녁':
             if 발화 == '아침':
                 배열 = 아침배열
@@ -141,7 +149,8 @@ def index(request):
                     ],
                     "itemListAlignment": "left",
                 }
-                _ret['template']['outputs'][1]['carousel']['items'].append(tmp)
+                if len(json_data[요일][발화][식당]['메뉴'])>0 and len(json_data[요일][발화][식당]['후식'])>0 and len(json_data[요일][발화][식당]['식수']) > 0:
+                    _ret['template']['outputs'][1]['carousel']['items'].append(tmp)
         _ret = json.dumps(_ret, ensure_ascii=False)
 
         return HttpResponse(_ret)

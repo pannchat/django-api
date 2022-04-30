@@ -11,12 +11,12 @@ import datetime
 
 scriptpath = os.path.dirname(__file__)
 # print("test")
-filename = os.path.join(scriptpath, 'diet0.pdf')
+filename = os.path.join(scriptpath, 'diet.pdf')
 file = PdfFileReader(filename)
 print(file.isEncrypted)
 
 tables = camelot.read_pdf(filename)
-print(tables)
+print(tables[0].df)
 now = datetime.datetime.now()
 
 dict = {

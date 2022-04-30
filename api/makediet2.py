@@ -22,16 +22,14 @@ tables.append(camelot.read_pdf(filename, table_regions=['203,720,275,232']))
 tables.append(camelot.read_pdf(filename, table_regions=['270,720,344,232']))
 tables.append(camelot.read_pdf(filename, table_regions=['338,720,416,232'], copy_text=['h']))
 tables.append(camelot.read_pdf(filename, table_regions=['411,720,483,232'], copy_text=['h']))
-tables.append(camelot.read_pdf(filename, table_regions=['478,720,542,232']))
+tables.append(camelot.read_pdf(filename, table_regions=['478,720,542,232'], copy_text=['h']))
 
 print(len(tables))
 
 for i in range(len(tables)):
     tables[i][0].df.replace('', np.nan , inplace=True)
-
-    # print(tables[i][0].df[0:15])
-    tables[i][0].df['res'] = tables[i][0].df[0:15].dropna(axis=1, thresh=7)
-    print(tables[i][0].df['res'])    
+    tables[i][0].df['res'] = tables[i][0].df[0:len(tables[i][0].df)].dropna(axis=1, thresh=7)
+    # print(tables[i][0].df['res'])
     # print(tables[i][0].df)
 
 # tables[0][0].df.replace('', np.nan , inplace=True)
@@ -44,7 +42,7 @@ for i in range(len(tables)):
 #     print(colCnt)
 
 weekend = camelot.read_pdf(filename, table_regions=['80,217,542,109'])
-print(weekend[0].df)
+# print(weekend[0].df)
 # for i in range(0, len(tables)):
 #     print(tables[i][0].df[0])
 #     print('------------')
@@ -373,17 +371,27 @@ dictTojson = json.dumps(dict)
 
 
 
-for i in range(len(식당)):
+for i in range(len(tables)):
     if i < 2 :
         시간 = "아침"
     elif 2<= i <5 :
         시간 = "점심"
     else :
         시간 = "저녁"
+
     j = 0
     for 요일 in 요일배열[:5]:
         for 종류 in 식사종류:
-            dict[요일][시간][식당[i]][종류] = str(tables[i][0].df['res'][j]).split('\n')
+            if 요일 == '목' and 종류 =='후식':
+                continue
+            
+            try:
+                tmp = str(tables[i][0].df['res'][j]).split('\n')
+                if tmp[0] == 'nan':
+                    del tmp[0]
+                dict[요일][시간][식당[i]][종류] = tmp
+            except:
+                dict[요일][시간][식당[i]][종류] = []
             j = j+1
 
 for i in range(3):
@@ -403,6 +411,6 @@ for i in range(3):
             j += 1
 
 dictTojson = json.dumps(dict, ensure_ascii=False)
-print(dictTojson)
+# print(dictTojson)
 with open('api/diet.json', 'w', encoding='utf-8') as make_file:
     json.dump(dict, make_file, ensure_ascii=False, indent='\t')
