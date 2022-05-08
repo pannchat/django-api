@@ -41,7 +41,7 @@ for i in range(len(tables)):
 # if colCnt > 1 :
 #     print(colCnt)
 
-weekend = camelot.read_pdf(filename, table_regions=['80,217,542,109'])
+weekend = camelot.read_pdf(filename, table_regions=['80,235,542,109'])
 # print(weekend[0].df)
 # for i in range(0, len(tables)):
 #     print(tables[i][0].df[0])
