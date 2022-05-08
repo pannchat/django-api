@@ -10,7 +10,6 @@ import datetime
 import cv2
 import os
 import glob
-from pdf2image import convert_from_path
 
 
 scriptpath = os.path.dirname(__file__)
@@ -24,8 +23,8 @@ for i in range(1,len(tables[0].df)):
         if(tables[0].df[j][i] != '' and not tables[0].df[j][i].isdigit() and tables[0].df[j][i].find(')') == -1):
             arr.append(tables[0].df[j][i])
             dateArr.append(tables[0].df[j][i-1])
-        if(tables[0].df[j][i] != '' and tables[0].df[j][i].isdigit()):
-            dateArr.append(tables[0].df[j][i])
+        # if(tables[0].df[j][i] != '' and tables[0].df[j][i].isdigit()):
+        #     dateArr.append(tables[0].df[j][i])
 
 print(tables[0].df)
 print(arr)
