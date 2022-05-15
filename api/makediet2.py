@@ -20,13 +20,14 @@ tables.append(camelot.read_pdf(filename, table_regions=['81,720,145,232']))
 tables.append(camelot.read_pdf(filename, table_regions=['142,720,206,232']))
 tables.append(camelot.read_pdf(filename, table_regions=['203,720,275,232']))
 tables.append(camelot.read_pdf(filename, table_regions=['270,720,344,232']))
-tables.append(camelot.read_pdf(filename, table_regions=['338,720,416,232'], copy_text=['h']))
+tables.append(camelot.read_pdf(filename, table_regions=['338,720,418,232'], copy_text=['h']))
 tables.append(camelot.read_pdf(filename, table_regions=['411,720,483,232'], copy_text=['h']))
 tables.append(camelot.read_pdf(filename, table_regions=['478,720,542,232'], copy_text=['h']))
 
 print(len(tables))
 
 for i in range(len(tables)):
+    print(tables[i][0].df)
     tables[i][0].df.replace('', np.nan , inplace=True)
     tables[i][0].df['res'] = tables[i][0].df[0:len(tables[i][0].df)].dropna(axis=1, thresh=7)
     # print(tables[i][0].df['res'])
@@ -381,10 +382,7 @@ for i in range(len(tables)):
 
     j = 0
     for 요일 in 요일배열[:5]:
-        for 종류 in 식사종류:
-            if 요일 == '목' and 종류 =='후식':
-                continue
-            
+        for 종류 in 식사종류:            
             try:
                 tmp = str(tables[i][0].df['res'][j]).split('\n')
                 if tmp[0] == 'nan':
