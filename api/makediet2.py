@@ -42,11 +42,13 @@ for i in range(len(tables)):
 # if colCnt > 1 :
 #     print(colCnt)
 
-weekend = camelot.read_pdf(filename, table_regions=['80,235,542,109'])
-# print(weekend[0].df)
-# for i in range(0, len(tables)):
-#     print(tables[i][0].df[0])
-#     print('------------')
+weekend = camelot.read_pdf(filename, table_regions=['80,264,546,142'])
+# weekend = weekend[0].df[1]
+weekend = (weekend[0].df[2:6].drop(labels=0, axis=1))
+weekend = weekend.reset_index(drop=True)
+weekend = weekend.values.tolist()
+
+print(weekend)
 
 now = datetime.datetime.now()
 
@@ -406,7 +408,7 @@ for i in range(3):
     for 요일 in 요일배열[-2:]:
         for 종류 in 식사종류[:2]:
             try:
-                tmp = weekend[0].df[i][j].split('\n')
+                tmp = weekend[j][i].split('\n')
                 if tmp[0] == 'nan':
                     del tmp[0]
                 elif tmp[0] =='':
@@ -420,3 +422,8 @@ dictTojson = json.dumps(dict, ensure_ascii=False)
 # print(dictTojson)
 with open('api/diet.json', 'w', encoding='utf-8') as make_file:
     json.dump(dict, make_file, ensure_ascii=False, indent='\t')
+[
+    ['김치찌개\n쌀밥\n김치볶음/도시락김\n계란후라이\n요구르트\n연근조림','제육볶음\n쌀밥\n시금치된장국\n쥐어채볶음\n마늘종지무침\n도시락김\n배추김치', '쇠고기대파해장국\n쌀밥\n미트볼조림\n다시마튀각\n호박나물\n도시락김\n깍두기'], 
+    ['식수/칼로리(5/800Kcal)', '식수/칼로리(10/911Kcal)', '식수/칼로리(10/825Kcal)'],
+    ['사골곰탕\n쌀밥\n김치볶음/도시락김\n계란후라이\n요구르트\n근대나물', '카레라이스\n유부맑은국\n꼬마돈가스&케찹\n단무지\n도시락김\n배추김치', '간장오리주물럭\n쌀밥\n고추장찌개\n얼갈이생채\n무나물\n도시락김\n열무김치'], 
+    ['식수/칼로리(5/819Kcal)', '식수/칼로리(10/916Kcal)', '식수/칼로리(10/924Kcal)']]
