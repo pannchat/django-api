@@ -393,9 +393,12 @@ for i in range(len(tables)):
                 tmp = str(tables[i][0].df['res'][j]).split('\n')
                 if tmp[0] == 'nan':
                     del tmp[0]
+                
                 dict[요일][시간][식당[i]][종류] = tmp
             except:
                 dict[요일][시간][식당[i]][종류] = []
+            if 요일 == '월' and 식당[i] =='NOODLE':
+                continue
             j = j+1
 
 for i in range(3):
