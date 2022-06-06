@@ -384,6 +384,10 @@ for i in range(len(tables)):
 
     j = 0
     for 요일 in 요일배열[:5]:
+        if 요일 == '월':
+            식사종류 = ["메뉴", "식수"]
+        else :
+            식사종류 = ["메뉴", "식수", "후식"]
         for 종류 in 식사종류:            
             try:
                 tmp = str(tables[i][0].df['res'][j]).split('\n')
