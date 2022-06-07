@@ -47,7 +47,7 @@ bread = {
 }
 for idx,b in enumerate(arr):
     공란수 = 2
-    bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/bread/"+str(idx+1+공란수)+".jpg"})
+    bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/breads/"+str(idx+1+공란수)+".jpg"})
 
 
 with open('api/bread.json','w',encoding='utf-8') as make_file:
@@ -77,7 +77,7 @@ cnt = 1
 for i in range(5):
     for j in range(5):
         test_cut = testRead[600+361*i:860+361*i, 155+297*j:453+297*j]
-        cv2.imwrite('api/static/bread/'+ str(cnt) + '.jpg',test_cut,params=[cv2.IMWRITE_JPEG_QUALITY,100])
+        cv2.imwrite('api/static/breads/'+ str(cnt) + '.jpg',test_cut,params=[cv2.IMWRITE_JPEG_QUALITY,100])
         # cv2.imshow('Gray scale',test_cut)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
