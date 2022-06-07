@@ -46,7 +46,7 @@ bread = {
     "bread" : []
 }
 for idx,b in enumerate(arr):
-    bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/bread/"+str(idx+1)+".jpg"})
+    bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/bread/"+dateArr[idx]+".jpg"})
 
 
 with open('api/bread.json','w',encoding='utf-8') as make_file:
