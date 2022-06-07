@@ -1,3 +1,4 @@
+from cmath import nan
 from tokenize import String
 from django.shortcuts import render
 import camelot
@@ -10,6 +11,8 @@ import datetime
 import cv2
 import os
 import glob
+from pdf2image import convert_from_path
+import numpy as np
 
 
 scriptpath = os.path.dirname(__file__)
@@ -17,16 +20,25 @@ filename = os.path.join(scriptpath, 'bread2.pdf')
 tables = camelot.read_pdf(filename)
 arr = []
 dateArr = []
-print(tables[0].df)
-for i in range(1,len(tables[0].df)):
-    for j in range(8):
-        if(tables[0].df[j][i] != '' and not tables[0].df[j][i].isdigit() and tables[0].df[j][i].find(')') == -1):
-            arr.append(tables[0].df[j][i])
-            dateArr.append(tables[0].df[j][i-1])
-        # if(tables[0].df[j][i] != '' and tables[0].df[j][i].isdigit()):
+# print(tables[0].df)
+res = tables[0].df.replace('', np.nan , inplace=True)
+res = tables[0].df.dropna(axis=1, thresh = 5)
+
+
+
+# print(tables[0].df)
+
+
+res = res.values.tolist()
+print(res)
+for i in range(1,len(res)):
+    for j in range(5):
+        if(str(res[i][j]) != 'nan' and not str(res[i][j]).isdigit() and str(res[i][j]).find(')') == -1):
+            arr.append(res[i][j])
+            dateArr.append(res[i-1][j])
+        # if(res[j][i] != '' and tables[0].df[j][i].isdigit()):
         #     dateArr.append(tables[0].df[j][i])
 
-print(tables[0].df)
 print(arr)
 print(dateArr)
 
@@ -65,7 +77,7 @@ for i in range(5):
     for j in range(5):
         test_cut = testRead[600+361*i:860+361*i, 155+297*j:453+297*j]
         cv2.imwrite('api/static/bread/'+ str(cnt) + '.jpg',test_cut,params=[cv2.IMWRITE_JPEG_QUALITY,100])
-        cv2.imshow('Gray scale',test_cut)
+        # cv2.imshow('Gray scale',test_cut)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
         cnt = cnt + 1
