@@ -131,7 +131,7 @@ def index(request):
                 tmp = {
                     "imageTitle": {
                         "title": 식당,
-                        "imageUrl": "https://babkaotalk.herokuapp.com/static/images/DangDang.png"
+                        "imageUrl": "https://babkaotalk.herokuapp.com/static/images/namu.png"
                     },
                     "itemList": [
                         {
