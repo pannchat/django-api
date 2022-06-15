@@ -413,7 +413,7 @@ weekday = camelot.read_pdf(filename, table_areas=[
 #     print(weekday[i].df)
 
 for i in range(len(weekday)):
-    print(weekday[i].df[2].values.tolist())
+    print(weekday[i].df[3].values.tolist())
 
 # weekend = camelot.read_pdf(filename, table_areas=[
 #     "2194, 1670, 2620.3, 1205",
