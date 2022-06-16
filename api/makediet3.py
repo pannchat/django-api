@@ -472,7 +472,7 @@ for i in range(len(weekday)):
 
 dictTojson = json.dumps(dict, ensure_ascii=False)
 # print(dictTojson)
-with open('api/dietTest.json', 'w', encoding='utf-8') as make_file:
+with open('api/diet.json', 'w', encoding='utf-8') as make_file:
     json.dump(dict, make_file, ensure_ascii=False, indent='\t')
 
 

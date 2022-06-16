@@ -139,7 +139,7 @@ def index(request):
                             "description": ', '.join(s for s in json_data[요일][발화][식당]['메뉴'][:-2])
                         },
                         {
-                            "title": "",
+                            "title": " ",
                             "description": ', '.join(s for s in json_data[요일][발화][식당]['메뉴'][-2:])
                             
                         },
