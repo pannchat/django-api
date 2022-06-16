@@ -150,7 +150,7 @@ def index(request):
                     ],
                     "itemListAlignment": "left",
                 }
-                if len(json_data[요일][발화][식당]['메뉴'])>0 or len(json_data[요일][발화][식당]['후식'])>0 or len(json_data[요일][발화][식당]['식수']) > 0:
+                if len(json_data[요일][발화][식당]['메뉴'])>0:
                     _ret['template']['outputs'][1]['carousel']['items'].append(tmp)
                 print(json_data[요일][발화][식당]['메뉴'],json_data[요일][발화][식당]['후식'],json_data[요일][발화][식당]['식수'])
                 # print(_ret['template']['outputs'][1]['carousel']['items'])

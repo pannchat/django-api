@@ -445,7 +445,7 @@ for i in range(len(weekday)):
             dict[요일]['저녁']['KOREAN1']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
         elif i == 11 :
             tmpData = weekday[i].df[idx].values.tolist()
-            dict[요일]['저녁']['KOREAN1']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+            dict[요일]['저녁']['KOREAN1']['후식'] = [tmpData[-1]]
             dict[요일]['저녁']['KOREAN2']['후식'] = [tmpData.pop()]
             dict[요일]['저녁']['KOREAN2']['메뉴'] = ' '.join(remove_values_from_list(tmpData , ',')).split()
 
