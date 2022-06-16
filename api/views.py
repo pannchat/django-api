@@ -136,15 +136,15 @@ def index(request):
                     "itemList": [
                         {
                             "title": "메뉴",
-                            "description": ', '.join(s for s in json_data[요일][발화][식당]['메뉴'])
+                            "description": ', '.join(s for s in json_data[요일][발화][식당]['메뉴'][:-2])
                         },
                         {
-                            "title": "후식",
+                            "description": ', '.join(s for s in json_data[요일][발화][식당]['메뉴'][-2:])
+                            
+                        },
+                        {
+                            "title": "PLUS",
                             "description": ', '.join(s for s in json_data[요일][발화][식당]['후식'])
-                        },
-                        {
-                            "title": "식수",
-                            "description": ', '.join(s for s in json_data[요일][발화][식당]['식수'])
                         }
                     ],
                     "itemListAlignment": "left",

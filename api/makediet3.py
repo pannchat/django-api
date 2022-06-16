@@ -411,9 +411,73 @@ weekday = camelot.read_pdf(filename, table_areas=[
 #         식사시간 = "저녁"
 #     dict[요일배열[i]][식사시간] 
 #     print(weekday[i].df)
+rowHead = ['KOREAN1','']
+
+def remove_values_from_list(the_list, val):
+   return [value for value in the_list if value != val]
 
 for i in range(len(weekday)):
-    print(weekday[i].df[3].values.tolist())
+    for idx,요일 in enumerate(요일배열[:-2]) :
+        if i == 0 :  
+            dict[요일]['아침']['KOREAN1']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 1 :
+            dict[요일]['아침']['KOREAN1']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 2 :
+            dict[요일]['아침']['KOREAN2']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 3 :
+            dict[요일]['아침']['KOREAN2']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 4 :
+            dict[요일]['점심']['NOODLE']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 5 :
+            dict[요일]['점심']['KOREAN']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 6 :
+            dict[요일]['점심']['SPECIAL']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 7 :
+            dict[요일]['점심']['NOODLE']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+            dict[요일]['점심']['KOREAN']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+            dict[요일]['점심']['SPECIAL']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 8 :
+            dict[요일]['점심']['NOODLE']['후식'] += ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+            dict[요일]['점심']['KOREAN']['후식'] += ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 9 :
+            dict[요일]['점심']['SPECIAL']['후식'] += ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 10 :
+            dict[요일]['저녁']['KOREAN1']['메뉴'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+        elif i == 11 :
+            tmpData = weekday[i].df[idx].values.tolist()
+            dict[요일]['저녁']['KOREAN1']['후식'] = ' '.join(remove_values_from_list(weekday[i].df[idx].values.tolist() , ',')).split()
+            dict[요일]['저녁']['KOREAN2']['후식'] = tmpData.pop()
+            dict[요일]['저녁']['KOREAN2']['메뉴'] = ' '.join(remove_values_from_list(tmpData , ',')).split()
+
+
+
+######## 주말 ########
+weekend = camelot.read_pdf(filename, table_areas=[
+    "2194, 1670, 2620.3, 1205",
+    "2194, 1205, 2620.3, 652",
+    "2194, 652, 2620.3, 245"
+], flavor="stream"
+)
+
+for i in range(len(weekday)):
+    for idx,요일 in enumerate(요일배열[-2:]) :
+        if i == 0:
+            dict[요일]['아침']['KOREAN1']['메뉴'] = ' '.join(remove_values_from_list(weekend[i].df[idx].values.tolist() , ',')).split()
+        if i == 1:
+            dict[요일]['점심']['KOREAN']['메뉴'] = ' '.join(remove_values_from_list(weekend[i].df[idx].values.tolist() , ',')).split()
+        if i == 2:
+            dict[요일]['저녁']['KOREAN1']['메뉴'] = ' '.join(remove_values_from_list(weekend[i].df[idx].values.tolist() , ',')).split()
+
+######## 파일 생성 #########
+
+dictTojson = json.dumps(dict, ensure_ascii=False)
+# print(dictTojson)
+with open('api/dietTest.json', 'w', encoding='utf-8') as make_file:
+    json.dump(dict, make_file, ensure_ascii=False, indent='\t')
+
+
+
+
 
 # weekend = camelot.read_pdf(filename, table_areas=[
 #     "2194, 1670, 2620.3, 1205",
