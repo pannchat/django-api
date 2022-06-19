@@ -64,7 +64,7 @@ def index(request):
         postBody = json.loads(request.body.decode('utf-8'))
         발화 = postBody['action']['detailParams']['mealTime']['value']
         try: 
-            if postBody['action']['detailParams']['dateTime']['value'] == '내일' : #and 요일배열[datetime.datetime.today().weekday()] != '일':
+            if postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] != '일':
                 요일 = 요일배열[(datetime.datetime.today().weekday() + 1) % 7 ]
             elif postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] == '일':
                 _errRet = errRet
