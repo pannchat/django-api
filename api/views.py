@@ -65,7 +65,7 @@ def index(request):
         발화 = postBody['action']['detailParams']['mealTime']['value']
         try: 
             if postBody['action']['detailParams']['dateTime']['value'] == '내일' : #and 요일배열[datetime.datetime.today().weekday()] != '일':
-                요일 = 요일배열[datetime.datetime.today().weekday() % 7 + 1]
+                요일 = 요일배열[datetime.datetime.today().weekday() % 6 + 1]
             # elif postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] == '일':
             #     _errRet = errRet
             #     _errRet['template']['outputs'][0]['simpleText']['text'] = "아직 일요일에는 내일 식단 정보를 조회할 수 없습니다."
