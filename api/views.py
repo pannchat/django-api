@@ -66,11 +66,11 @@ def index(request):
         try: 
             if postBody['action']['detailParams']['dateTime']['value'] == '내일' : #and 요일배열[datetime.datetime.today().weekday()] != '일':
                 요일 = 요일배열[(datetime.datetime.today().weekday() + 1) % 7 ]
-            # elif postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] == '일':
-            #     _errRet = errRet
-            #     _errRet['template']['outputs'][0]['simpleText']['text'] = "아직 일요일에는 내일 식단 정보를 조회할 수 없습니다."
-            #     _errRet = json.dumps(_errRet, ensure_ascii=False)
-            #     return HttpResponse(_errRet)
+            elif postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] == '일':
+                _errRet = errRet
+                _errRet['template']['outputs'][0]['simpleText']['text'] = "아직 일요일에는 내일 식단 정보를 조회할 수 없습니다."
+                _errRet = json.dumps(_errRet, ensure_ascii=False)
+                return HttpResponse(_errRet)
             else:
                 요일 = postBody['action']['detailParams']['dateTime']['value']
         except:
