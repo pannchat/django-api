@@ -64,7 +64,15 @@ def index(request):
         postBody = json.loads(request.body.decode('utf-8'))
         발화 = postBody['action']['detailParams']['mealTime']['value']
         try: 
-            요일 = postBody['action']['detailParams']['dateTime']['value']
+            if postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] != '일':
+                요일 = 요일배열[datetime.datetime.today().weekday() + 1]
+            elif postBody['action']['detailParams']['dateTime']['value'] == '내일' and 요일배열[datetime.datetime.today().weekday()] == '일':
+                _errRet = errRet
+                _errRet['template']['outputs'][0]['simpleText']['text'] = "아직 식단 정보가 업데이트 되지 않았습니다.\n식단이 올라오는대로 업데이트할게요."
+                _errRet = json.dumps(_errRet, ensure_ascii=False)
+                return HttpResponse(_errRet)
+            else:
+                요일 = postBody['action']['detailParams']['dateTime']['value']
         except:
             요일 = 요일배열[datetime.datetime.today().weekday()]
 
