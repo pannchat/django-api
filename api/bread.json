@@ -93,17 +93,17 @@
 		{
 			"id": "28",
 			"name": "어니언브래드",
-			"img": "/static/bread/21.jpg"
+			"img": "/static/bread/22.jpg"
 		},
 		{
 			"id": "29",
 			"name": "땅콩크림샌드",
-			"img": "/static/bread/22.jpg"
+			"img": "/static/bread/23.jpg"
 		},
 		{
 			"id": "30",
 			"name": "초코머핀",
-			"img": "/static/bread/23.jpg"
+			"img": "/static/bread/24.jpg"
 		}
 	]
 }
