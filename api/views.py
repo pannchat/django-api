@@ -185,6 +185,8 @@ def bread(request):
         # 발화 = postBody['action']['detailParams']['bakery']['value']
         요일 = 요일배열[datetime.datetime.today().weekday()]
         breadIdx = -1
+        if(len(json_data['bread']) == 0) :
+            _errRet['template']['outputs'][0]['simpleText']['text'] = "빵 정보가 아직 업데이트되지 않았습니다. 업로드되는 대로 반영하겠슴다~!"
         for idx, arr in enumerate(json_data['bread']):
             if arr['id'] == datetime.datetime.now().strftime("%-d"):
                 bread = arr['name']
