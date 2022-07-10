@@ -16,28 +16,34 @@ import numpy as np
 
 
 scriptpath = os.path.dirname(__file__)
-filename = os.path.join(scriptpath, 'bread2.pdf')
-tables = camelot.read_pdf(filename)
+filename = os.path.join(scriptpath, 'bread.pdf')
+tables = camelot.read_pdf(filename, flavor="stream")
 arr = []
 dateArr = []
-# print(tables[0].df)
+print(tables[0].df)
 res = tables[0].df.replace('', np.nan , inplace=True)
 res = tables[0].df.dropna(axis=1, thresh = 5)
 
+def hasNumber(stringVal):
+    return any(elem.isdigit() for elem in stringVal)
 
-
-# print(tables[0].df)
+print(tables[0].df)
 
 
 res = res.values.tolist()
-print(res)
-for i in range(1,len(res)):
+# print(res)
+for i in range(2,len(res)):
     for j in range(5):
-        if(str(res[i][j]) != 'nan' and not str(res[i][j]).isdigit() and str(res[i][j]).find(')') == -1):
+        if(str(res[i][j]) != 'nan' and not str(res[i][j]).isdigit() and str(res[i][j]).find(')') == -1 and not hasNumber(str(res[i][j]))):
             arr.append(res[i][j])
+        if(str(res[i-1][j]) != 'nan' and str(res[i-1][j]).isdigit()):
             dateArr.append(res[i-1][j])
         # if(res[j][i] != '' and tables[0].df[j][i].isdigit()):
         #     dateArr.append(tables[0].df[j][i])
+
+
+# 날짜 안맞는 문제
+dateArr = ['1'] + dateArr
 
 print(arr)
 print(dateArr)
@@ -46,7 +52,7 @@ bread = {
     "bread" : []
 }
 for idx,b in enumerate(arr):
-    공란수 = 2
+    공란수 = 4
     bread["bread"].append({"id":dateArr[idx], "name" : b, "img" : "/static/bread/"+str(idx+1+공란수)+".jpg"})
 
 

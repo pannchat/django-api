@@ -190,6 +190,7 @@ def bread(request):
         for idx, arr in enumerate(json_data['bread']):
             if arr['id'] == datetime.datetime.now().strftime("%-d"):
                 bread = arr['name']
+                imgPath = arr['img']
                 breadIdx = idx
         if breadIdx == -1:
             _errRet = errRet
@@ -207,8 +208,8 @@ def bread(request):
                         "itemCard": {
                             "title": "",
                             "thumbnail": {
-                                # "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + str(breadIdx+1+2) + '.jpg',
-                                "imageUrl": "https://babkaotalk.herokuapp.com" + arr['img'],
+                                # "imageUrl": "https://babkaotalk.herokuapp.com/static/bread/" + str(breadIdx+1+3) + '.jpg',
+                                "imageUrl": "https://babkaotalk.herokuapp.com" + imgPath ,
                                 "width": 800,
                                 "height": 800
                             },
